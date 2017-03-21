@@ -1,0 +1,26 @@
+// Mixins
+@mixin breakFirst($media) {
+  @if $media == medium {
+    @media (min-width: $screen-tablet) { @content; }
+  }
+  @else if $media == large {
+    @media (min-width: $screen-desktop) { @content; }
+  }
+  @else if $media == wide {
+    @media (min-width: $screen-lg-desktop) { @content; }
+  }
+  @else {
+    @media (min-width: $media) { @content; }
+  }
+}
+@mixin breakTo($media) {
+  @if $media == medium {
+    @media (max-width: $screen-tablet) { @content; }
+  }
+  @else if $media == large {
+    @media (max-width: $screen-desktop) { @content; }
+  }
+  @else if $media == wide {
+    @media (max-width: $screen-lg-desktop) { @content; }
+  }
+}

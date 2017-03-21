@@ -38,9 +38,9 @@ get_header(); ?>
   	<div class="kbe_content">
 	<?php
 		if ( !is_search() ):
-			get_template_part( 'inc/wp-knowledgebase/kb', 'content-archive');
+			include UFCLAS_KB_PLUGIN_DIR . '/templates/kb-content-archive.php';
 		else:
-			get_template_part( 'inc/wp-knowledgebase/kb', 'search');
+			include UFCLAS_KB_PLUGIN_DIR . '/templates/kb-search.php';
 		endif;
 	?>
     </div><!-- .kbe_content -->

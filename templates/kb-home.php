@@ -22,7 +22,7 @@ get_header(); ?>
     <div class="kbe_content">
     <div class="row">
 		<?php
-            get_template_part( 'inc/wp-knowledgebase/kb', 'content-home');
+            include UFCLAS_KB_PLUGIN_DIR . '/templates/kb-content-home.php';
         ?>
     </div>
     </div><!-- .kbe_content -->

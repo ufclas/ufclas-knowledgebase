@@ -10,7 +10,11 @@ License: GPL2
 Build Date: 20170320
 */
 
-require get_stylesheet_directory() . '/inc/wp-knowledgebase/customizer.php';
+define( 'UFCLAS_KB_PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
+define( 'UFCLAS_KB_PLUGIN_URL', plugin_dir_url( __FILE__ ) );
+define( 'UFCLAS_KB_DEFAULT_TITLE', __('Knowledge Base', 'ufclas-knowledgebase') );
+
+require UFCLAS_KB_PLUGIN_DIR . '/inc/customizer.php';
 
 /**
  * Remove the default CSS styles
@@ -27,9 +31,11 @@ function ufclas_knowledgebase_remove_style() {
 	wp_dequeue_script('kbe_live_search');
 	
 	if ( is_post_type_archive( KBE_POST_TYPE ) && !( is_tax( KBE_POST_TAXONOMY ) || is_tax( KBE_POST_TAGS ) || is_search() ) ){
-		wp_enqueue_style('awesomplete', get_stylesheet_directory_uri() . '/inc/awesomplete/awesomplete.css', array(), null );
-		wp_enqueue_script('awesomplete', get_stylesheet_directory_uri() . '/inc/awesomplete/awesomplete.js', array(), null, true);
-		wp_enqueue_script('ufclas-knowledgebase-kb', get_stylesheet_directory_uri() . '/inc/wp-knowledgebase/kb.js', array('awesomplete'), null, true);
+		wp_enqueue_style('awesomplete', UFCLAS_KB_PLUGIN_URL . 'inc/awesomplete/awesomplete.css', array(), null );
+		wp_enqueue_script('awesomplete', UFCLAS_KB_PLUGIN_URL . 'inc/awesomplete/awesomplete.js', array(), null, true);
+		
+		wp_enqueue_style('ufclas-knowledgebase', UFCLAS_KB_PLUGIN_URL . 'css/kb.css', array(), null );
+		wp_enqueue_script('ufclas-knowledgebase', UFCLAS_KB_PLUGIN_URL . 'js/kb.js', array('awesomplete'), null, true);
 	}
 }
 add_action( 'wp_enqueue_scripts', 'ufclas_knowledgebase_remove_style', 11 );
@@ -51,19 +57,19 @@ remove_filter( 'template_include', 'template_chooser' );
 function ufclas_knowledgebase_template( $template_path ) {
 	
 	if ( is_search() && ( get_query_var('post_type') == KBE_POST_TYPE ) ){
-		$template_path = get_stylesheet_directory() . '/inc/wp-knowledgebase/kb-archive.php';
+		$template_path = UFCLAS_KB_PLUGIN_DIR . '/templates/kb-archive.php';
 	}
 	
 	elseif ( is_singular( KBE_POST_TYPE ) ){
-		$template_path = get_stylesheet_directory() . '/inc/wp-knowledgebase/kb-article.php';
+		$template_path = UFCLAS_KB_PLUGIN_DIR . '/templates/kb-article.php';
 	}
 	
 	elseif ( is_tax( KBE_POST_TAXONOMY ) || is_tax( KBE_POST_TAGS ) ){
-		$template_path = get_stylesheet_directory() . '/inc/wp-knowledgebase/kb-archive.php';
+		$template_path = UFCLAS_KB_PLUGIN_DIR . '/templates/kb-archive.php';
 	}
 	
 	elseif ( is_post_type_archive( KBE_POST_TYPE ) ){
-		$template_path = get_stylesheet_directory() . '/inc/wp-knowledgebase/kb-home.php';
+		$template_path = UFCLAS_KB_PLUGIN_DIR . '/templates/kb-home.php';
 	}
 
 	return $template_path;
@@ -76,12 +82,11 @@ add_action( 'template_include', 'ufclas_knowledgebase_template', 11 );
  * @since 0.0.0
  */
 function ufclas_knowledgebase_modify_custom(){
-	$label = get_theme_mod('kb_title', __('Knowledge Base', 'ufclas-knowledgebase'));
 	
 	// Redefine the kb article
 	$post_type_args = get_post_type_object( KBE_POST_TYPE );
 	$post_type_args->rewrite['slug'] = KBE_PLUGIN_SLUG;
-    $post_type_args->labels->name = $label;
+    $post_type_args->labels->name = get_theme_mod( 'kb_title', UFCLAS_KB_DEFAULT_TITLE );
 	$post_type_args->show_in_rest = true;
 	$post_type_args->rest_base = KBE_PLUGIN_SLUG;
 	
@@ -119,10 +124,9 @@ add_filter( 'rewrite_rules_array', 'ufclas_knowledgebase_modify_rewrite' );
  * @since 0.0.0
  */
 function ufclas_knowledgebase_header(){
-	$title = get_theme_mod('kb_title', __('Knowledge Base', 'ufclas-knowledgebase'));
 	
 	$shortcode = sprintf( '[ufl-landing-page-hero headline="%s" subtitle="%s" image="%s" image_height="%s"]%s[/ufl-landing-page-hero]', 
-        $title,
+        get_theme_mod( 'kb_title', UFCLAS_KB_DEFAULT_TITLE ),
         '',
         '',
         'half',
@@ -147,12 +151,12 @@ function ufclas_knowledgebase_header(){
  */
 function ufclas_knowledgebase_classes( $classes ) {
 	
-	if ( is_post_type_archive('kbe_knowledgebase') ){
+	if ( is_post_type_archive( KBE_POST_TYPE ) ){
 		
-		if ( is_tax('kbe_taxonomy') ){
-			$classes[] = 'kbe_taxonomy-' . get_queried_object_id();
+		if ( is_tax( KBE_POST_TAXONOMY ) ){
+			$classes[] = KBE_POST_TAXONOMY . '-' . get_queried_object_id();
 		}
-		elseif ( !is_tax('kbe_taxonomy') && !is_tax('kbe_tags') ){
+		elseif ( !is_tax( KBE_POST_TAXONOMY ) && !is_tax( KBE_POST_TAGS ) ){
 			$classes[] = 'kb-homepage';
 		}
 	}
@@ -172,14 +176,12 @@ function ufclas_knowledgebase_breadcrumbs() {
 	if( KBE_BREADCRUMBS_SETTING == 1 ){
 		
 		$current = get_queried_object();
-		$post_type_obj = get_post_type_object( KBE_POST_TYPE );
-		$post_type_title = get_theme_mod( 'kb_title', $post_type_obj->labels->name);
 		$crumbs = array();
 		$current_id = false;
 		
 		echo '<ul class="kb-breadcrumbs">';
 		
-		echo '<li><a href="' . get_post_type_archive_link( KBE_POST_TYPE ) . '">' . $post_type_title . '</a></li>';
+		echo '<li><a href="' . get_post_type_archive_link( KBE_POST_TYPE ) . '">' . get_theme_mod( 'kb_title', UFCLAS_KB_DEFAULT_TITLE ) . '</a></li>';
 		
 		// Get the correct term ID
 		if ( is_single() ){
@@ -317,7 +319,7 @@ add_action( 'restrict_manage_posts', 'ufclas_knowledgebase_article_filter_list' 
  */
 function ufclas_knowledgebase_title( $title ) {
     
-	$post_type_title = get_theme_mod( 'kb_title' );
+	$post_type_title = get_theme_mod( 'kb_title', UFCLAS_KB_DEFAULT_TITLE );
 	
 	// Add the tax title and post type title
 	if ( is_tax(KBE_POST_TAXONOMY) || is_tax(KBE_POST_TAGS) ){
