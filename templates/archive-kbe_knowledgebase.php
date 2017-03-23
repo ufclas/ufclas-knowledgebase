@@ -35,13 +35,9 @@ get_header(); ?>
 
 <div class="row">
   <div class="col-md-12">
-  	<div class="kbe_content">
+  	<div class="entry-content kbe_content">
 	<?php
-		if ( !is_search() ):
-			include UFCLAS_KB_PLUGIN_DIR . '/templates/kb-content-archive.php';
-		else:
-			include UFCLAS_KB_PLUGIN_DIR . '/templates/kb-search.php';
-		endif;
+		include UFCLAS_KB_PLUGIN_DIR . '/templates/content-archive.php';
 	?>
     </div><!-- .kbe_content -->
   </div>

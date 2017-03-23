@@ -19,10 +19,10 @@ get_header(); ?>
 
 <div class="row">
   <div class="col-md-12">
-    <div class="kbe_content">
+    <div class="entry-content kbe_content">
     <div class="row">
 		<?php
-            include UFCLAS_KB_PLUGIN_DIR . '/templates/kb-content-home.php';
+            include UFCLAS_KB_PLUGIN_DIR . '/templates/content-home.php';
         ?>
     </div>
     </div><!-- .kbe_content -->

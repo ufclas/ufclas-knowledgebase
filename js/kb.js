@@ -1,6 +1,9 @@
+/*!
+ * JS for search using awesomplete
+ */
 // Use Awesomplete to send request for articles when the page loads
 var ajax = new XMLHttpRequest();
-var siteUrl = ajaxurl.substr(0, ajaxurl.indexOf('wp-admin/admin-ajax.php'))
+var siteUrl = ajaxurl.substr(0, ajaxurl.indexOf('wp-admin/admin-ajax.php'));
 ajax.open("GET", siteUrl + 'wp-json/wp/v2/kb/search', true);
 ajax.onload = function() {
 	var list = JSON.parse(ajax.responseText).map(function(i) { return {label: i.title, value: i.link}; });

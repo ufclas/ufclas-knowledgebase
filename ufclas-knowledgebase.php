@@ -3,11 +3,11 @@
 Plugin Name: UFCLAS Knowledgebase
 Plugin URI: https://it.clas.ufl.edu/
 Description: Feature plugin for WP Knowlegebase customizations.
-Version: 0.0.0
+Version: 0.1.0
 Author: Priscilla Chapman (CLAS IT)
 Author URI: https://it.clas.ufl.edu/
 License: GPL2
-Build Date: 20170320
+Build Date: 20170323
 */
 
 define( 'UFCLAS_KB_PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
@@ -30,12 +30,15 @@ function ufclas_knowledgebase_remove_style() {
 	// Set the search setting to Off
 	wp_dequeue_script('kbe_live_search');
 	
+	// Add Awesomeplete only to the knowledgebase home page
 	if ( is_post_type_archive( KBE_POST_TYPE ) && !( is_tax( KBE_POST_TAXONOMY ) || is_tax( KBE_POST_TAGS ) || is_search() ) ){
 		wp_enqueue_style('awesomplete', UFCLAS_KB_PLUGIN_URL . 'inc/awesomplete/awesomplete.css', array(), null );
 		wp_enqueue_script('awesomplete', UFCLAS_KB_PLUGIN_URL . 'inc/awesomplete/awesomplete.js', array(), null, true);
-		
-		wp_enqueue_style('ufclas-knowledgebase', UFCLAS_KB_PLUGIN_URL . 'css/kb.css', array(), null );
-		wp_enqueue_script('ufclas-knowledgebase', UFCLAS_KB_PLUGIN_URL . 'js/kb.js', array('awesomplete'), null, true);
+		wp_enqueue_script('ufclas-knowledgebase', UFCLAS_KB_PLUGIN_URL . 'js/kb.min.js', array('awesomplete'), null, true);
+	}
+	// Add custom styles
+	if ( is_singular( KBE_POST_TYPE ) || is_post_type_archive( KBE_POST_TYPE ) ){
+		wp_enqueue_style('ufclas-knowledgebase', UFCLAS_KB_PLUGIN_URL . 'css/kb.min.css', array(), null );	
 	}
 }
 add_action( 'wp_enqueue_scripts', 'ufclas_knowledgebase_remove_style', 11 );
@@ -57,19 +60,19 @@ remove_filter( 'template_include', 'template_chooser' );
 function ufclas_knowledgebase_template( $template_path ) {
 	
 	if ( is_search() && ( get_query_var('post_type') == KBE_POST_TYPE ) ){
-		$template_path = UFCLAS_KB_PLUGIN_DIR . '/templates/kb-archive.php';
+		$template_path = UFCLAS_KB_PLUGIN_DIR . '/templates/archive-kbe_knowledgebase.php';
 	}
 	
 	elseif ( is_singular( KBE_POST_TYPE ) ){
-		$template_path = UFCLAS_KB_PLUGIN_DIR . '/templates/kb-article.php';
+		$template_path = UFCLAS_KB_PLUGIN_DIR . '/templates/single-kbe_knowledgebase.php';
 	}
 	
 	elseif ( is_tax( KBE_POST_TAXONOMY ) || is_tax( KBE_POST_TAGS ) ){
-		$template_path = UFCLAS_KB_PLUGIN_DIR . '/templates/kb-archive.php';
+		$template_path = UFCLAS_KB_PLUGIN_DIR . '/templates/archive-kbe_knowledgebase.php';
 	}
 	
 	elseif ( is_post_type_archive( KBE_POST_TYPE ) ){
-		$template_path = UFCLAS_KB_PLUGIN_DIR . '/templates/kb-home.php';
+		$template_path = UFCLAS_KB_PLUGIN_DIR . '/templates/kbe_knowledgebase.php';
 	}
 
 	return $template_path;
@@ -157,6 +160,7 @@ function ufclas_knowledgebase_classes( $classes ) {
 			$classes[] = KBE_POST_TAXONOMY . '-' . get_queried_object_id();
 		}
 		elseif ( !is_tax( KBE_POST_TAXONOMY ) && !is_tax( KBE_POST_TAGS ) ){
+			$classes[] = 'page-template-landing-page';
 			$classes[] = 'kb-homepage';
 		}
 	}
@@ -179,7 +183,7 @@ function ufclas_knowledgebase_breadcrumbs() {
 		$crumbs = array();
 		$current_id = false;
 		
-		echo '<ul class="kb-breadcrumbs">';
+		echo '<ul class="breadcrumb-wrap kb-breadcrumbs">';
 		
 		echo '<li><a href="' . get_post_type_archive_link( KBE_POST_TYPE ) . '">' . get_theme_mod( 'kb_title', UFCLAS_KB_DEFAULT_TITLE ) . '</a></li>';
 		

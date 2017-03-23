@@ -47,11 +47,12 @@ foreach ( $terms as $term ):
 		endforeach;
 	
 	else:
-		// Display links to posts in the term
+		// Display links to all posts in the term
 		$post_query = new WP_Query( array(
 			'post_type' => $post_type,
 			'order' => 'ASC',
 			'orderby' => $post_order,
+			'posts_per_page' => -1,
 			'tax_query' => array(
 				array(
 					'taxonomy' => $term->taxonomy,
