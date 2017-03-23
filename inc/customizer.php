@@ -28,14 +28,14 @@ function ufclas_knowledgebase_sanitize_choices( $input, $setting ) {
 function ufclas_knowledgebase_customize_register( $wp_customize ) {
 	// Add a panel
 	$wp_customize->add_panel( 'ufclas_knowledgebase', array(
-		'title' => __('Knowledge Base', 'ufclas-knowledgebase'),
+		'title' => __('UFCLAS Knowledge Base', 'ufclas-knowledgebase'),
 		'description' => __('Options for modifying the knowledgebase settings.', 'ufclas-knowledgebase'),
 		'priority' => '160',
 	));
 	
 	// Newsletter Option
 	$wp_customize->add_section( 'theme_options_kb', array(
-		'title' => __('Knowledge Base', 'ufclas-knowledgebase'),
+		'title' => __('Settings', 'ufclas-knowledgebase'),
 		'description' => __('', 'ufclas-knowledgebase'),
 		'panel' => 'ufclas_knowledgebase',
 	));
