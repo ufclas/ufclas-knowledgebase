@@ -1,0 +1,141 @@
+/*!
+ * Styles to format the WP Knowledgebase for UF CLAS
+ *
+ */
+.post-type-archive-kbe_knowledgebase .landing-page-hero-full, .tax-kbe_taxonomy .landing-page-hero-full, .tax-kbe_tag .landing-page-hero-full {
+  background-color: #ccc;
+}
+.post-type-archive-kbe_knowledgebase .landing-page-hero-full .hero-img h1, .tax-kbe_taxonomy .landing-page-hero-full .hero-img h1, .tax-kbe_tag .landing-page-hero-full .hero-img h1 {
+  color: #00529b;
+  text-shadow: none;
+  letter-spacing: 0px;
+}
+.post-type-archive-kbe_knowledgebase .landing-page-hero-full .hero-text, .tax-kbe_taxonomy .landing-page-hero-full .hero-text, .tax-kbe_tag .landing-page-hero-full .hero-text {
+  padding-top: 0;
+}
+.post-type-archive-kbe_knowledgebase .search-form, .tax-kbe_taxonomy .search-form, .tax-kbe_tag .search-form {
+  margin-bottom: 0;
+}
+.post-type-archive-kbe_knowledgebase .search-form #s, .tax-kbe_taxonomy .search-form #s, .tax-kbe_tag .search-form #s {
+  border-color: #ccc;
+}
+
+@media (min-width: 992px) {
+  .kbe_articles {
+    padding: 0 30px;
+  }
+}
+.kbe_articles .kb-list {
+  margin-bottom: 45px;
+}
+.kb-homepage .kbe_articles .kb-list {
+  margin-left: 30px;
+}
+@media (min-width: 992px) {
+  .kb-homepage .kbe_articles .kb-list {
+    margin-left: 0;
+  }
+}
+.kbe_articles .kb-post-link {
+  line-height: 1.2;
+  margin-bottom: 15px;
+}
+.kbe_articles .kb-list-parent {
+  margin-left: 0;
+}
+.kbe_articles .kb-heading {
+  margin-bottom: 30px;
+}
+.kbe_articles .kb-heading a:link, .kbe_articles .kb-heading a:visited {
+  color: #00529b;
+}
+.kbe_articles .kb-heading a:hover, .kbe_articles .kb-heading a:active {
+  color: #084b81;
+}
+.kb-homepage .kbe_articles .kb-heading {
+  border-bottom: 1px solid #bbb;
+  padding-bottom: 7.5px;
+}
+.kbe_articles .kbe-secondary-text, .kbe_articles .kbe_count, .kbe_articles .kbe-view-all a {
+  font: 500 14px/36px "gentona", "Georgia", serif;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: #888 !important;
+  padding: 3px 15px 0 0;
+}
+.kbe_articles .kbe_count {
+  display: none;
+}
+@media (min-width: 480px) {
+  .kbe_articles .kbe_count {
+    display: block;
+  }
+}
+.kbe_articles .kbe-view-all {
+  margin-top: -30px;
+  margin-bottom: 30px;
+}
+
+@media (max-width: 768px) {
+  .kb-breadcrumbs li {
+    display: none;
+  }
+  .kb-breadcrumbs li:first-child {
+    display: list-item;
+  }
+}
+
+.kb-search-list, #search-result li, #live-search .awesomplete > ul > li {
+  margin: 0;
+  list-style-type: none;
+  font-weight: 500;
+  text-transform: none;
+  text-align: left;
+  padding-bottom: 15px;
+}
+.kb-search-list:before, #search-result li:before, #live-search .awesomplete > ul > li:before {
+  content: none;
+  margin-right: 0;
+}
+
+#search-result {
+  margin: 0;
+  list-style-type: none;
+  font-weight: 500;
+}
+
+#live-search .awesomplete {
+  display: block;
+}
+#live-search .awesomplete > input {
+  display: block;
+}
+#live-search .awesomplete > ul > li {
+  font-size: 18px;
+  padding: 7.5px 30px;
+}
+
+.single-kbe_knowledgebase .entry-title {
+  margin-bottom: 0;
+}
+.single-kbe_knowledgebase .entry-meta li:before {
+  content: none;
+  margin-right: 0;
+}
+.single-kbe_knowledgebase .entry-meta a[rel="tag"] {
+  background-color: #a9dcda;
+  color: #00529b;
+  font: 700 14px/14px "gentona", "Georgia", serif;
+  letter-spacing: 2px;
+  padding: 9px 14px;
+  text-transform: uppercase;
+  text-decoration: none;
+  display: inline-block;
+}
+.single-kbe_knowledgebase .entry-meta a[rel="tag"]:before {
+  color: #4c87b5;
+  content: "\f323";
+  font-family: dashicons;
+  font-size: 12px;
+  padding-right: 2px;
+}

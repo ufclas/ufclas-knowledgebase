@@ -33,7 +33,7 @@ get_header(); ?>
   <div class="col-md-12">
     <?php 
 		while ( have_posts() ) : the_post();
-			get_template_part( 'inc/wp-knowledgebase/kb', 'content');
+			include UFCLAS_KB_PLUGIN_DIR . '/templates/content.php';
 		endwhile; // End of the loop. 
 	?>
   </div>

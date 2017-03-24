@@ -35,13 +35,9 @@ get_header(); ?>
 
 <div class="row">
   <div class="col-md-12">
-  	<div class="kbe_content">
+  	<div class="entry-content kbe_content">
 	<?php
-		if ( !is_search() ):
-			get_template_part( 'inc/wp-knowledgebase/kb', 'content-archive');
-		else:
-			get_template_part( 'inc/wp-knowledgebase/kb', 'search');
-		endif;
+		include UFCLAS_KB_PLUGIN_DIR . '/templates/content-archive.php';
 	?>
     </div><!-- .kbe_content -->
   </div>

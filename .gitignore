@@ -4,4 +4,6 @@ Thumbs.db
 .sass-cache
 *.orig
 .DS_Store
-defaults.php
+node_modules
+.npm-debug.log
+tmp
