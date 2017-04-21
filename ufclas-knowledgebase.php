@@ -7,7 +7,7 @@ Version: 0.1.0
 Author: Priscilla Chapman (CLAS IT)
 Author URI: https://it.clas.ufl.edu/
 License: GPL2
-Build Date: 20170323
+Build Date: 20170421
 */
 
 define( 'UFCLAS_KB_PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
@@ -35,6 +35,7 @@ function ufclas_knowledgebase_remove_style() {
 		wp_enqueue_style('awesomplete', UFCLAS_KB_PLUGIN_URL . 'inc/awesomplete/awesomplete.css', array(), null );
 		wp_enqueue_script('awesomplete', UFCLAS_KB_PLUGIN_URL . 'inc/awesomplete/awesomplete.js', array(), null, true);
 		wp_enqueue_script('ufclas-knowledgebase', UFCLAS_KB_PLUGIN_URL . 'js/kb.min.js', array('awesomplete'), null, true);
+		wp_localize_script('awesomplete', 'kb_data', array( 'home_url' => home_url('/') ));
 	}
 	// Add custom styles
 	if ( is_singular( KBE_POST_TYPE ) || is_post_type_archive( KBE_POST_TYPE ) ){
@@ -140,7 +141,8 @@ function ufclas_knowledgebase_header(){
 	
 	// Add a form ID and input ID
 	$form = str_replace( 'role="search"', 'id="live-search" autocomplete="off" role="search"', $form );
-	$form = str_replace( 'name="query"', 'id="s" name="query"', $form );
+	$form = str_replace( 'for="query"', 'for="s"', $form );
+	$form = str_replace( 'id="query" name="query"', 'id="s" name="s"', $form );
     
     echo str_replace('<p>FORM</p>', $form, do_shortcode( $shortcode ) );   
 }

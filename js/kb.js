@@ -3,8 +3,8 @@
  */
 // Use Awesomplete to send request for articles when the page loads
 var ajax = new XMLHttpRequest();
-var siteUrl = ajaxurl.substr(0, ajaxurl.indexOf('wp-admin/admin-ajax.php'));
-ajax.open("GET", siteUrl + 'wp-json/wp/v2/kb/search', true);
+var homeUrl = kb_data.home_url;
+ajax.open("GET", homeUrl + 'wp-json/wp/v2/kb/search', true);
 ajax.onload = function() {
 	var list = JSON.parse(ajax.responseText).map(function(i) { return {label: i.title, value: i.link}; });
 	new Awesomplete(document.querySelector("#s"),{ list: list });
