@@ -3,11 +3,11 @@
 Plugin Name: UFCLAS Knowledgebase
 Plugin URI: https://it.clas.ufl.edu/
 Description: Feature plugin for WP Knowlegebase customizations.
-Version: 0.1.0
+Version: 0.1.1
 Author: Priscilla Chapman (CLAS IT)
 Author URI: https://it.clas.ufl.edu/
 License: GPL2
-Build Date: 20170421
+Build Date: 20170816
 */
 
 define( 'UFCLAS_KB_PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
@@ -140,9 +140,8 @@ function ufclas_knowledgebase_header(){
 	$form = get_search_form( false );
 	
 	// Add a form ID and input ID
-	$form = str_replace( 'role="search"', 'id="live-search" autocomplete="off" role="search"', $form );
-	$form = str_replace( 'for="query"', 'for="s"', $form );
-	$form = str_replace( 'id="query" name="query"', 'id="s" name="s"', $form );
+	$form = str_replace( 'for="query"', 'for="query-kb"', $form );
+	$form = str_replace( 'id="query"', 'id="query-kb"', $form );
     
     echo str_replace('<p>FORM</p>', $form, do_shortcode( $shortcode ) );   
 }
